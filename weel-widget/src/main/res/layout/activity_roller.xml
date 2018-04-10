@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tolls="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_space"
+            android:scrollbarStyle="outsideOverlay">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.sample.ui.roller.RollerView
+            android:id="@+id/roller"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/roller_background"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            app:animationDuration="fast"
+            app:count="4"
+            app:gap="8dp"
+            app:rollerBackground="@drawable/roller_item_view_background"
+            app:textColor="@color/roller_item_text"
+            app:textSize="@dimen/roller_item_text_size"/>
+
+        <TextView
+            android:id="@+id/label_demo"
+            style="@style/Base.TextAppearance.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/roller"
+            android:layout_marginBottom="@dimen/default_space"
+            android:layout_marginTop="@dimen/group_space"
+            android:gravity="center_horizontal"
+            android:text="@string/label_demo"/>
+
+        <View
+            android:id="@+id/spacer"
+            android:layout_width="100dp"
+            android:layout_height="1dp"
+            android:layout_below="@id/label_demo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/default_space"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/label_current"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spacer"
+            android:layout_marginBottom="@dimen/group_space"
+            android:gravity="center_horizontal"
+            android:textAllCaps="true"
+            android:textSize="12sp"
+            tolls:text="@string/label_current"/>
+
+        <EditText
+            android:id="@+id/edit_value"
+            android:layout_width="@dimen/btn_width"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/label_current"
+            android:layout_marginEnd="@dimen/default_space"
+            android:layout_marginRight="@dimen/default_space"
+            android:gravity="end"
+            android:hint="@string/hint_enter_value"
+            android:inputType="number"
+            android:longClickable="false"
+            android:maxLength="4"
+            android:maxLines="1"/>
+
+        <Button
+            android:id="@+id/btn_set_value"
+            android:layout_width="@dimen/btn_width"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/label_current"
+            android:layout_toEndOf="@id/edit_value"
+            android:layout_toRightOf="@id/edit_value"
+            android:text="@string/set_value"/>
+
+        <Button
+            android:id="@+id/btn_random"
+            android:layout_width="@dimen/btn_width"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_set_value"
+            android:layout_marginTop="@dimen/group_space"
+            android:text="@string/set_random"/>
+
+        <ToggleButton
+            android:id="@+id/btn_increment"
+            android:layout_width="@dimen/btn_width"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_random"
+            android:textOff="@string/increment"
+            android:textOn="@string/increment"/>
+
+        <ToggleButton
+            android:id="@+id/btn_decrement"
+            android:layout_width="@dimen/btn_width"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_increment"
+            android:textOff="@string/decrement"
+            android:textOn="@string/decrement"/>
+    </RelativeLayout>
+</ScrollView>

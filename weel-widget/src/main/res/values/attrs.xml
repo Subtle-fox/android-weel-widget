@@ -1,0 +1,14 @@
+<resources>
+    <declare-styleable name="RollerView">
+        <attr name="textSize" format="dimension"/>
+        <attr name="textColor" format="color"/>
+        <attr name="gap" format="dimension"/>
+        <attr name="rollerBackground" format="color|reference"/>
+        <attr name="count" format="integer"/>
+        <attr name="animationDuration" format="enum|integer">
+            <enum name="fast" value="500"/>
+            <enum name="normal" value="1000"/>
+            <enum name="slow" value="1500"/>
+        </attr>
+    </declare-styleable>
+</resources>

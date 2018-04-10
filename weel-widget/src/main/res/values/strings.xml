@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Roller View Sample</string>
+    <string name="set_random">Random</string>
+    <string name="set_value">Set value</string>
+    <string name="hint_enter_value">Enter new value</string>
+    <string name="label_demo">Demo</string>
+    <string name="label_current">- %04d -</string>
+    <string name="increment">Increment</string>
+    <string name="decrement">Decrement</string>
+</resources>

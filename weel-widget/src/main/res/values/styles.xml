@@ -1,0 +1,10 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+
+        <item name="buttonStyle">@style/Base.Widget.AppCompat.Button.Colored</item>
+        <item name="editTextStyle">@style/Base.V7.Widget.AppCompat.EditText</item>
+    </style>
+</resources>

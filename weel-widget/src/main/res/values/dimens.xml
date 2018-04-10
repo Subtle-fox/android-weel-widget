@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btn_width">180dp</dimen>
+    <dimen name="default_space">8dp</dimen>
+    <dimen name="group_space">16dp</dimen>
+    <dimen name="roller_item_text_size">32sp</dimen>
+</resources>
