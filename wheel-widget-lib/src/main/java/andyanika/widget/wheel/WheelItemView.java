@@ -1,4 +1,4 @@
-package com.sample.ui.roller;
+package andyanika.widget.wheel;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -11,9 +11,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import com.example.wheel_widget_lib.R;
+
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 import static android.graphics.Paint.FAKE_BOLD_TEXT_FLAG;
-import static com.sample.ui.roller.RollerView.DEFAULT_ANIMATION_DURATION;
 
 /**
  * Created by Andrey Kolpakov on 08.04.2017.
@@ -22,7 +23,7 @@ import static com.sample.ui.roller.RollerView.DEFAULT_ANIMATION_DURATION;
  * Содержит логику вычисления базовой линии и её анимированного смещения
  */
 
-final class RollerItemView extends View {
+final class WheelItemView extends View {
     private static final int MIN_SIZE_WIDTH = 40;
     private static final int MIN_SIZE_HEIGHT = 80;
 
@@ -30,7 +31,7 @@ final class RollerItemView extends View {
     private int baseLineShift;
     private int baseLineShiftNext;
     private ObjectAnimator animator;
-    private CompanionObject companion;
+    private CellExtra cellExtra;
     private CellManager cellManager;
     private TextPaint textPaint;
     private float textWidth;
@@ -38,32 +39,32 @@ final class RollerItemView extends View {
     private int animationDuration;
     private AccelerateDecelerateInterpolator interpolator;
 
-    public RollerItemView(Context context) {
+    public WheelItemView(Context context) {
         super(context);
         init(null, 0);
     }
 
-    public RollerItemView(Context context, AttributeSet attrs) {
+    public WheelItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
 
-    public RollerItemView(Context context, AttributeSet attrs, int defStyle) {
+    public WheelItemView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RollerView, defStyle, 0);
-        int textColor = a.getColor(R.styleable.RollerView_textColor, Color.BLACK);
-        float textSize = a.getDimension(R.styleable.RollerView_textSize, 32);
-        setBackgroundResource(a.getResourceId(R.styleable.RollerView_rollerBackground, 0));
-        animationDuration = a.getInteger(R.styleable.RollerView_animationDuration, DEFAULT_ANIMATION_DURATION);
+        final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.WheelView, defStyle, 0);
+        int textColor = a.getColor(R.styleable.WheelView_textColor, Color.BLACK);
+        float textSize = a.getDimension(R.styleable.WheelView_textSize, 32);
+        setBackgroundResource(a.getResourceId(R.styleable.WheelView_rollerBackground, 0));
+        animationDuration = a.getInteger(R.styleable.WheelView_animationDuration, WheelView.DEFAULT_ANIMATION_DURATION);
         a.recycle();
 
         invalidateTextPaintAndMeasurements(textColor, textSize);
         cellManager = new CellManager();
-        companion = new CompanionObject();
+        cellExtra = new CellExtra();
         interpolator = new AccelerateDecelerateInterpolator();
     }
 
@@ -114,20 +115,20 @@ final class RollerItemView extends View {
         }
 
         setMeasuredDimension(width, height);
-        initCompanionObject(width, height);
-        cellManager.init(companion);
+        initCellExtra(width, height);
+        cellManager.init(cellExtra);
     }
 
-    private void initCompanionObject(int contentWidth, int contentHeight) {
-        companion.cellHeight = 9 * contentHeight / 20;
-        companion.textPaint = textPaint;
-        companion.contentHeight = contentHeight;
-        companion.textX = (int) ((contentWidth - textWidth) / 2);
-        companion.textY = (int) (textHeight / 2);
+    private void initCellExtra(int contentWidth, int contentHeight) {
+        cellExtra.cellHeight = 9 * contentHeight / 20;
+        cellExtra.textPaint = textPaint;
+        cellExtra.contentHeight = contentHeight;
+        cellExtra.textX = (int) ((contentWidth - textWidth) / 2);
+        cellExtra.textY = (int) (textHeight / 2);
     }
 
     private void reduceBaseLineShift() {
-        int delta = companion.cellHeight * 10;
+        int delta = cellExtra.cellHeight * 10;
         if (baseLineShift > delta) {
             baseLineShift = baseLineShiftNext - delta;
             baseLineShiftNext = baseLineShiftNext - delta;
@@ -142,14 +143,14 @@ final class RollerItemView extends View {
         invalidate();
     }
 
-    void setValue(int newNumber, @RollerView.Direction int direction, boolean animated) {
+    void setValue(int newNumber, @WheelView.Direction int direction, boolean animated) {
         if (animator != null && animator.isRunning()) {
             animator.cancel();
         }
         reduceBaseLineShift();
 
         newNumber %= 10;
-        int shift = getCellsToMove(newNumber, direction) * companion.cellHeight;
+        int shift = getCellsToMove(newNumber, direction) * cellExtra.cellHeight;
         baseLineShiftNext = baseLineShiftNext + shift;
         currentNumber = newNumber;
 
@@ -163,7 +164,7 @@ final class RollerItemView extends View {
         }
     }
 
-    private int getCellsToMove(int newNumber, @RollerView.Direction int direction) {
+    private int getCellsToMove(int newNumber, @WheelView.Direction int direction) {
         return (currentNumber - newNumber - direction * 10) % 10;
     }
 

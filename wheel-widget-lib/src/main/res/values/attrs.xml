@@ -1,5 +1,5 @@
 <resources>
-    <declare-styleable name="RollerView">
+    <declare-styleable name="WheelView">
         <attr name="textSize" format="dimension"/>
         <attr name="textColor" format="color"/>
         <attr name="gap" format="dimension"/>

@@ -1,4 +1,4 @@
-package com.sample.ui.roller;
+package andyanika.widget.wheel;
 
 import android.graphics.Paint;
 
@@ -7,7 +7,7 @@ import android.graphics.Paint;
  *
  * Структура для хранения основных данных
  */
-class CompanionObject {
+class CellExtra {
     int textX;
     int textY;
     int contentHeight;

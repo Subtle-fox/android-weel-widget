@@ -1,10 +1,12 @@
-package com.sample.ui.roller;
+package andyanika.widget.wheel;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.IntDef;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
+
+import com.example.wheel_widget_lib.R;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -13,11 +15,11 @@ import java.lang.annotation.RetentionPolicy;
  * Created by Andrey Kolpakov on 08.04.2017.
  * <p>
  * UI control "Счетчик"
- * Отображает ролики счетчика {@link RollerItemView}, содержит логику расположения роликов, определение направления вращения
+ * Отображает ролики счетчика {@link WheelItemView}, содержит логику расположения роликов, определение направления вращения
  * и особых ситуация для граничных условий инкремента и декремента
  */
 
-public final class RollerView extends FrameLayout {
+public final class WheelView extends FrameLayout {
     static final int DEFAULT_ANIMATION_DURATION = 500;
     private static final int DEFAULT_ROLLES_COUNT = 4;
     private static final int MAX_ROLLERS_COUNT = 6;
@@ -30,7 +32,7 @@ public final class RollerView extends FrameLayout {
     @interface Direction {
     }
 
-    private RollerItemView[] rollerItems;
+    private WheelItemView[] rollerItems;
     private int currentValue = 0;
 
     /**
@@ -54,33 +56,33 @@ public final class RollerView extends FrameLayout {
      */
     private int animationDuration;
 
-    public RollerView(Context context) {
+    public WheelView(Context context) {
         super(context);
         init(null, 0);
     }
 
-    public RollerView(Context context, AttributeSet attrs) {
+    public WheelView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
 
-    public RollerView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public WheelView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs, defStyleAttr);
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RollerView, defStyleAttr, 0);
-        rollersCount = a.getInteger(R.styleable.RollerView_count, DEFAULT_ROLLES_COUNT);
+        final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.WheelView, defStyleAttr, 0);
+        rollersCount = a.getInteger(R.styleable.WheelView_count, DEFAULT_ROLLES_COUNT);
         rollersCount = Math.max(1, Math.min(MAX_ROLLERS_COUNT, rollersCount));
-        gap = Math.max(0, a.getDimensionPixelSize(R.styleable.RollerView_gap, 12));
-        animationDuration = a.getInteger(R.styleable.RollerView_animationDuration, DEFAULT_ANIMATION_DURATION);
+        gap = Math.max(0, a.getDimensionPixelSize(R.styleable.WheelView_gap, 12));
+        animationDuration = a.getInteger(R.styleable.WheelView_animationDuration, DEFAULT_ANIMATION_DURATION);
         a.recycle();
 
         max = pow10(rollersCount) - 1;
-        rollerItems = new RollerItemView[rollersCount];
+        rollerItems = new WheelItemView[rollersCount];
         for (int i = 0; i < rollersCount; i++) {
-            rollerItems[i] = new RollerItemView(getContext(), attrs, defStyleAttr);
+            rollerItems[i] = new WheelItemView(getContext(), attrs, defStyleAttr);
             addView(rollerItems[i]);
         }
     }
@@ -111,7 +113,7 @@ public final class RollerView extends FrameLayout {
         int contentHeight = parentHeight - paddingTop - paddingBottom;
 
         // Измеряется "базовая" первая ячейка счетчика, по ней дальше высчитывается общий размер
-        RollerItemView baseItem = rollerItems[0];
+        WheelItemView baseItem = rollerItems[0];
         int measureSpecsW = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         int measureSpecsH = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         baseItem.measure(measureSpecsW, measureSpecsH);
@@ -143,7 +145,7 @@ public final class RollerView extends FrameLayout {
 
         measureSpecsW = MeasureSpec.makeMeasureSpec((contentWidth - overallGapSize) / rollersCount, MeasureSpec.EXACTLY);
         measureSpecsH = MeasureSpec.makeMeasureSpec(contentHeight, MeasureSpec.EXACTLY);
-        for (RollerItemView rollerItem : rollerItems) {
+        for (WheelItemView rollerItem : rollerItems) {
             rollerItem.measure(measureSpecsW, measureSpecsH);
         }
         setMeasuredDimension(contentWidth + paddingLeft + paddingRight, contentHeight + paddingBottom + paddingTop);

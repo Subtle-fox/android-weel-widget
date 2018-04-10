@@ -1,1 +1,1 @@
-include ':weel-widget'
+include ':sample', ':wheel-widget-lib'

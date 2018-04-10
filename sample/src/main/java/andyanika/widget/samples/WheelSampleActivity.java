@@ -1,4 +1,4 @@
-package com.sample.ui;
+package andyanika.widget.samples;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,19 +11,20 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.sample.ui.roller.R;
-import com.sample.ui.roller.RollerView;
 
 import java.lang.ref.WeakReference;
 import java.util.Random;
 
-public class RollerActivity extends AppCompatActivity {
+import andyanika.widget.wheel.WheelView;
+
+public class WheelSampleActivity extends AppCompatActivity {
     private static final int INCREMENT = 10;
     private static final int DECREMENT = 20;
     private static final int DEFAULT_DELAY = 1000;
     private static final String EXTRA_CURRENT_VALUE = "current_value";
 
     private UpdateHandler updateHandler;
-    private RollerView rollerView;
+    private WheelView rollerView;
     private TextView labelCurrentValue;
     private EditText editCurrentValue;
     private ToggleButton btnIncrement;
@@ -55,14 +56,14 @@ public class RollerActivity extends AppCompatActivity {
     }
 
     private void bindControls() {
-        rollerView = (RollerView) findViewById(R.id.roller);
+        rollerView = findViewById(R.id.roller);
         int rollersCount = rollerView.getRollersCount();
 
-        labelCurrentValue = (TextView) findViewById(R.id.label_current);
-        editCurrentValue = (EditText) findViewById(R.id.edit_value);
+        labelCurrentValue = findViewById(R.id.label_current);
+        editCurrentValue = findViewById(R.id.edit_value);
         editCurrentValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(rollersCount)});
-        btnIncrement = (ToggleButton) findViewById(R.id.btn_increment);
-        btnDecrement = (ToggleButton) findViewById(R.id.btn_decrement);
+        btnIncrement = findViewById(R.id.btn_increment);
+        btnDecrement = findViewById(R.id.btn_decrement);
 
         btnIncrement.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,26 +152,26 @@ public class RollerActivity extends AppCompatActivity {
     }
 
     private static class UpdateHandler extends Handler {
-        private final WeakReference<RollerActivity> activityWeakReference;
+        private final WeakReference<WheelSampleActivity> activityWeakReference;
         private final int delay;
 
-        UpdateHandler(RollerActivity rollerActivity, int delay) {
-            activityWeakReference = new WeakReference<>(rollerActivity);
+        UpdateHandler(WheelSampleActivity wheelSampleActivity, int delay) {
+            activityWeakReference = new WeakReference<>(wheelSampleActivity);
             this.delay = delay;
         }
 
         @Override
         public void handleMessage(Message msg) {
-            RollerActivity rollerActivity = activityWeakReference.get();
-            if (rollerActivity == null) {
+            WheelSampleActivity wheelSampleActivity = activityWeakReference.get();
+            if (wheelSampleActivity == null) {
                 return;
             }
 
             if (msg.what == INCREMENT) {
-                rollerActivity.increment();
+                wheelSampleActivity.increment();
                 sendEmptyMessageDelayed(INCREMENT, delay);
             } else if (msg.what == DECREMENT) {
-                rollerActivity.decrement();
+                wheelSampleActivity.decrement();
                 sendEmptyMessageDelayed(DECREMENT, delay);
             }
         }
